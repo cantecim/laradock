@@ -25,6 +25,10 @@ volumes:
     driver: ${VOLUMES_DRIVER}
   mongo:
     driver: ${VOLUMES_DRIVER}
+  mongohost_data:
+    external: true
+  mongohost_config:
+    external: true
   minio:
     driver: ${VOLUMES_DRIVER}
   rethinkdb:
@@ -248,6 +252,8 @@ services:
         - "9000"
       extra_hosts:
         - "dockerhost:${DOCKER_HOST_IP}"
+        - "api-corviq.local:${DOCKER_HOST_IP}"
+        - "can.api-corviq.local:${DOCKER_HOST_IP}"
       environment:
         - PHP_IDE_CONFIG=${PHP_IDE_CONFIG}
         - DOCKER_HOST=tcp://docker-in-docker:2376
@@ -500,7 +506,8 @@ services:
         args:
           - POSTGRES_VERSION=${POSTGRES_VERSION}
       volumes:
-        - ${DATA_PATH_HOST}/postgres:/var/lib/postgresql/data
+        #- ${DATA_PATH_HOST}/postgres:/var/lib/postgresql/data
+        - postgres:/var/lib/postgresql/data
         - ${POSTGRES_ENTRYPOINT_INITDB}:/docker-entrypoint-initdb.d
       ports:
         - "${POSTGRES_PORT}:5432"
@@ -560,8 +567,8 @@ services:
       ports:
         - "${MONGODB_PORT}:27017"
       volumes:
-        - ${DATA_PATH_HOST}/mongo:/data/db
-        - ${DATA_PATH_HOST}/mongo_config:/data/configdb
+        - mongohost_data:/data/db
+        - mongohost_config:/data/configdb
       networks:
         - backend
 

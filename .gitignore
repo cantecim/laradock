@@ -1,6 +1,7 @@
 .idea
 /logs
 /data
+/.data
 .env
 /.project
 .docker-sync
@@ -18,3 +19,5 @@
 !/.devcontainer/docker-compose.extend-example.yml
 
 .DS_Store
+
+.vscode
