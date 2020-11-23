@@ -559,6 +559,8 @@ services:
       build: ./mongo
       ports:
         - "${MONGODB_PORT}:27017"
+        - "27018:27018"
+        - "27019:27019"
       volumes:
         - ${DATA_PATH_HOST}/mongo:/data/db
         - ${DATA_PATH_HOST}/mongo_config:/data/configdb
